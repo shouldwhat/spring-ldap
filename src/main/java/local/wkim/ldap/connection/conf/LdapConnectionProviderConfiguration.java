@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import local.wkim.ldap.connection.LdapConnectionProviderFactory;
 
+
 @Configuration
 public class LdapConnectionProviderConfiguration {
 
