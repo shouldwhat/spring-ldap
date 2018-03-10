@@ -1,5 +1,5 @@
 # spring-ldap
-
+![](/images/class.png)
 -. Ldap(Protocol) 을 제어하여, MS-ActiveDirectory 플랫폼 상의 Entity를 제어하기 위한 프로젝트.
 
 -. OOP 사상을 반영한 클래스 구조 설계.
@@ -26,7 +26,7 @@
 -. 클래스
 
 	(1) 구조
-	![](/images/class.png)
+	
 	(2) 설명
 
 
