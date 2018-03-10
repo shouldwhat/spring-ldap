@@ -28,7 +28,7 @@
 	(1) 구조
 	
 	<div>
-		![](/images/class.png)
+	![](/images/class.png)
 	</div>
 	
 	(2) 설명
