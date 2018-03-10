@@ -1,4 +1,4 @@
-package local.wkim.ldap.entity;
+package local.wkim.ldap.entity.base;
 
 import javax.naming.Name;
 

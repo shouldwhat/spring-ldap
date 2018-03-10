@@ -1,4 +1,4 @@
-package local.wkim.ldap.manager;
+package local.wkim.ldap.manager.base;
 
 import java.util.List;
 
