@@ -6,16 +6,9 @@
 
 -. 테스트 가능한 restful api 구현.
 
--. 제어 가능한 Entity
+-. 제어 가능한 Entity : 사용자(CN), 조직(OU), 컴퓨터 (COMPUTER), 정책(POLICY)
 
-	(1) 사용자 (CN)
-	
-	(2) 조직 (OU)
-	
-	(3) 컴퓨터 (COMPUTER)
-	
-	(4) 정책 (POLICY)
-	
+
 -. 개발 환경
 
 	(1) JDK : 1.8.0_144
