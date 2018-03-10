@@ -24,7 +24,6 @@
 	
 	
 -. 클래스
-
-	![](/images/class.png)
+![](/images/class.png)
 
 -. 시퀀스
