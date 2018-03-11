@@ -11,8 +11,10 @@ import local.wkim.ldap.connection.entity.LdapConnectionInfo;
 public class ParamBaseConnectionProvider  extends LdapConnectionProvider {
 
 	@Override
-	protected LdapConnectionInfo connectionInfo(Map<String, Object> param) {
+	protected LdapConnectionInfo connectionInfo() {
 
+		Map<String, Object> param = super.getConnectionInfo();
+		
 		LdapConnectionInfo connectionInfo = new LdapConnectionInfo();
 		
 		connectionInfo.setUrl((String) param.get("url"));

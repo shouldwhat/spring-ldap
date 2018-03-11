@@ -1,6 +1,5 @@
 package local.wkim.ldap.connection;
 
-import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class PropertyBaseConnectionProvider  extends LdapConnectionProvider {
 	private Properties connectionProp;
 
 	@Override
-	protected LdapConnectionInfo connectionInfo(Map<String, Object> param) {
+	protected LdapConnectionInfo connectionInfo() {
 
 		LdapConnectionInfo connectionInfo = new LdapConnectionInfo();
 		
@@ -27,5 +26,4 @@ public class PropertyBaseConnectionProvider  extends LdapConnectionProvider {
 		
 		return connectionInfo;
 	}
-	
 }

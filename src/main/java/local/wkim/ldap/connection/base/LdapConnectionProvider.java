@@ -9,10 +9,19 @@ import local.wkim.ldap.connection.entity.LdapConnectionInfo;
 
 public abstract class LdapConnectionProvider {
 
-	protected abstract LdapConnectionInfo connectionInfo(Map<String, Object> param);
-	public LdapTemplate createConnection(Map<String, Object> param) {
+	private Map<String, Object> connectionInfo = null;
+	
+	public Map<String, Object> getConnectionInfo() {
+		return connectionInfo;
+	}
+	public void setConnectionInfo(Map<String, Object> connectionInfo) {
+		this.connectionInfo = connectionInfo;
+	}
+	
+	protected abstract LdapConnectionInfo connectionInfo();
+	public LdapTemplate createConnection() {
 		
-		LdapConnectionInfo connectionInfo = this.connectionInfo(param);
+		LdapConnectionInfo connectionInfo = this.connectionInfo();
 		return this.create(connectionInfo);
 	}
 	
@@ -26,11 +35,11 @@ public abstract class LdapConnectionProvider {
 	private LdapContextSource createContext(LdapConnectionInfo connectionInfo) {
 		
 		LdapContextSource context = new LdapContextSource();
+		
 		context.setUrl(connectionInfo.getUrl());
 		context.setBase(connectionInfo.getBase());
 		context.setUserDn(connectionInfo.getUserDn());
 		context.setPassword(connectionInfo.getPassword());
-		
 		/*
 		 * afterPropertiesSet() 메소드를 호출해야, 동적 커넥션 refresh가 가능함.
 		 */
