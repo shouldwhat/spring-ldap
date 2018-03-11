@@ -3,12 +3,14 @@ package local.wkim.ldap.connection;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
 import local.wkim.ldap.connection.entity.LdapConnectionInfo;
 
-@Component("propertyBaseConnectionProvider")
+@Scope("prototype")
+@Component("propertyBase")
 public class PropertyBaseConnectionProvider  extends LdapConnectionProvider {
 
 	@Autowired

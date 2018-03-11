@@ -2,12 +2,14 @@ package local.wkim.ldap.connection;
 
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
 import local.wkim.ldap.connection.entity.LdapConnectionInfo;
 
-@Component("paramBaseConnectionProvider")
+@Scope("prototype")
+@Component("paramBase")
 public class ParamBaseConnectionProvider  extends LdapConnectionProvider {
 
 	@Override
