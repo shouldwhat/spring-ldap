@@ -1,42 +1,60 @@
 package local.wkim.ldap.manager.base;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
+import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQuery;
 
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
 
 public abstract class LdapManager<T>{
 
-	private LdapConnectionProvider provider;
+	private LdapTemplate ldapTemplate;
 	
-	public LdapManager<T> connectionProvider(LdapConnectionProvider provider) {
-		this.provider = provider;
+	public LdapManager<T> connect(LdapConnectionProvider provider) {
+		this.ldapTemplate = provider.createConnection();
 		return this;
 	}
 	
 	public T create(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ldapTemplate.create(entity);
+		return entity;
 	}
 	
 	public T update(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ldapTemplate.update(entity);
+		return entity;
 	}
 	
 	public void delete(T entity) {
-		// TODO Auto-generated method stub
-		
+
+		ldapTemplate.delete(entity);
 	}
 	
 	public T find(LdapQuery query) {
-		// TODO Auto-generated method stub
-		return null;
+
+		T entity = ldapTemplate.findOne(query, this.genericClassType());
+		return entity;
 	}
 	
 	public List<T> findAll(LdapQuery query) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<T> entities = ldapTemplate.find(query, this.genericClassType());
+		return entities;
+	}
+	
+	/***
+	 * LdapManager 클래스의 제네릭 타입(<T>)을 조회한다.
+	 */
+	public Class<T> genericClassType() {
+		
+		Type superClass = this.getClass().getGenericSuperclass();
+		Type typeClass = (((ParameterizedType) superClass).getActualTypeArguments())[0];
+		
+		return (Class<T>) typeClass;
 	}
 }
