@@ -8,8 +8,8 @@ import org.springframework.ldap.odm.annotations.Attribute;
 import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
 
-@Entry(objectClasses = { "top", "user" })
-public class LdapUser {
+@Entry(objectClasses = { "user", "top" })
+public final class LdapUser {
 	
 	@Id
 	private Name dn;
