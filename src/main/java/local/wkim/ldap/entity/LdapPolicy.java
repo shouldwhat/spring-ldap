@@ -7,7 +7,7 @@ import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
 
 @Entry(objectClasses = {"groupPolicyContainer", "top"}, base="CN=Policies, CN=System")
-public class LdapPolicy {
+public final class LdapPolicy {
 
 	@Id
 	private Name dn;

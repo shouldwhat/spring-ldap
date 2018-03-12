@@ -7,7 +7,7 @@ import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
 
 @Entry(objectClasses = { "computer", "top" })
-public class LdapComputer {
+public final class LdapComputer {
 
 	@Id
 	private Name dn;
