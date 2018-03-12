@@ -4,10 +4,13 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQuery;
 
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
+import local.wkim.ldap.exception.LdapManagerException;
 
 public abstract class LdapManager<T>{
 
@@ -35,13 +38,20 @@ public abstract class LdapManager<T>{
 		ldapTemplate.delete(entity);
 	}
 	
-	public T find(LdapQuery query) {
+	public T find(LdapQuery query) throws LdapManagerException {
 
-		T entity = ldapTemplate.findOne(query, this.genericClassType());
-		return entity;
+		try {
+			return ldapTemplate.findOne(query, this.genericClassType());
+		} catch(EmptyResultDataAccessException e) {
+			/* not exist entity */
+			return null;
+		} catch(IncorrectResultSizeDataAccessException e) {
+			/* exception */
+			throw new LdapManagerException(e.getMessage(), e);
+		}
 	}
 	
-	public List<T> findAll(LdapQuery query) {
+	public List<T> findAll(LdapQuery query) throws LdapManagerException {
 		
 		List<T> entities = ldapTemplate.find(query, this.genericClassType());
 		return entities;
