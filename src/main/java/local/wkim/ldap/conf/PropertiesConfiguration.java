@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
@@ -15,6 +16,7 @@ public class PropertiesConfiguration {
 	
 	private static final String DEFAULT_CONNECTION_PROP = "/properties/connection.properties";
 	
+	@Bean("connectionProp")
 	public Properties connectionProp() {
 		
 		boolean isLoadOk = false;
