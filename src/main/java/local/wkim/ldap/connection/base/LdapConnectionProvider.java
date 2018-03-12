@@ -28,7 +28,11 @@ public abstract class LdapConnectionProvider {
 	protected LdapTemplate create(LdapConnectionInfo connectionInfo) {
 		
 		LdapTemplate ldapTemplate = new LdapTemplate(this.createContext(connectionInfo));
-//		ldapTemplate.setIgnorePartialResultException(true);
+		/*
+		 * 해당 속성을 설정하지 않으면, find 메소드 호출 시 exception 발생함.. 
+		 */
+		ldapTemplate.setIgnorePartialResultException(true);
+		
 		return ldapTemplate;
 	}
 	
@@ -41,7 +45,7 @@ public abstract class LdapConnectionProvider {
 		context.setUserDn(connectionInfo.getUserDn());
 		context.setPassword(connectionInfo.getPassword());
 		/*
-		 * afterPropertiesSet() 메소드를 호출해야, 동적 커넥션 refresh가 가능함.
+		 * afterPropertiesSet() 메소드를 호출해야, 동적 커넥션 refresh가 가능함..
 		 */
 		context.afterPropertiesSet();
 		
