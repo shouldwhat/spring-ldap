@@ -13,15 +13,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import local.wkim.ldap.connection.LdapConnectionProviderFactory;
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
-import local.wkim.ldap.entity.LdapOu;
+import local.wkim.ldap.entity.LdapPolicy;
 import local.wkim.ldap.exception.LdapManagerException;
 import local.wkim.ldap.manager.base.LdapManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OuManagerTest {
+public class PolicyManagerTest {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OuManagerTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PolicyManagerTest.class);
 	
 	@Autowired
 	private LdapConnectionProviderFactory ldapConnectionProviderFactory;
@@ -29,12 +29,12 @@ public class OuManagerTest {
 	@Autowired
 	private LdapManagerFactory ldapManagerFactory;
 	
-	private LdapManager<LdapOu> manager = null;
+	private LdapManager<LdapPolicy> manager = null;
 	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setup() {
-		manager = (LdapManager<LdapOu>) ldapManagerFactory.createLdapManager("ou");
+		manager = (LdapManager<LdapPolicy>) ldapManagerFactory.createLdapManager("policy");
 	}
 	
 	@Test
@@ -42,13 +42,13 @@ public class OuManagerTest {
 		
 		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
 		
-		String findOu = "wkkims";
+		String findPolicy = "08_실행명령 사용 차단";
 		LdapQuery query = LdapQueryBuilder.query()
-				.where("objectClass").is("organizationalUnit")
-				.and("ou").is(findOu);
+				.where("objectClass").is("groupPolicyContainer")
+				.and("displayName").is(findPolicy);
 		
 		try {
-			LdapOu find = manager.connect(provider).find(query);
+			LdapPolicy find = manager.connect(provider).find(query);
 			LOG.debug("`e`found = {}", find);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();

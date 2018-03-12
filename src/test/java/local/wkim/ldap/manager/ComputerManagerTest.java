@@ -13,15 +13,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import local.wkim.ldap.connection.LdapConnectionProviderFactory;
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
-import local.wkim.ldap.entity.LdapOu;
+import local.wkim.ldap.entity.LdapComputer;
 import local.wkim.ldap.exception.LdapManagerException;
 import local.wkim.ldap.manager.base.LdapManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OuManagerTest {
+public class ComputerManagerTest {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OuManagerTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ComputerManagerTest.class);
 	
 	@Autowired
 	private LdapConnectionProviderFactory ldapConnectionProviderFactory;
@@ -29,12 +29,12 @@ public class OuManagerTest {
 	@Autowired
 	private LdapManagerFactory ldapManagerFactory;
 	
-	private LdapManager<LdapOu> manager = null;
+	private LdapManager<LdapComputer> manager = null;
 	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setup() {
-		manager = (LdapManager<LdapOu>) ldapManagerFactory.createLdapManager("ou");
+		manager = (LdapManager<LdapComputer>) ldapManagerFactory.createLdapManager("computer");
 	}
 	
 	@Test
@@ -42,13 +42,13 @@ public class OuManagerTest {
 		
 		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
 		
-		String findOu = "wkkims";
+		String findComputer = "WON12";
 		LdapQuery query = LdapQueryBuilder.query()
-				.where("objectClass").is("organizationalUnit")
-				.and("ou").is(findOu);
+				.where("objectClass").is("computer")
+				.and("cn").is(findComputer);
 		
 		try {
-			LdapOu find = manager.connect(provider).find(query);
+			LdapComputer find = manager.connect(provider).find(query);
 			LOG.debug("`e`found = {}", find);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();

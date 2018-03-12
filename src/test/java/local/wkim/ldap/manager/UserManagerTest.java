@@ -14,12 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import local.wkim.ldap.connection.LdapConnectionProviderFactory;
 import local.wkim.ldap.connection.base.LdapConnectionProvider;
 import local.wkim.ldap.entity.LdapUser;
+import local.wkim.ldap.exception.LdapManagerException;
 import local.wkim.ldap.manager.base.LdapManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserManagerTest {
-private static final Logger LOG = LoggerFactory.getLogger(OuManagerTest.class);
+	
+	private static final Logger LOG = LoggerFactory.getLogger(OuManagerTest.class);
 	
 	@Autowired
 	private LdapConnectionProviderFactory ldapConnectionProviderFactory;
@@ -35,21 +37,6 @@ private static final Logger LOG = LoggerFactory.getLogger(OuManagerTest.class);
 		manager = (LdapManager<LdapUser>) ldapManagerFactory.createLdapManager("user");
 	}
 	
-//	@Test
-	public void create() {
-		
-		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
-		LOG.debug("`e`provider = {}", provider.createConnection());
-		
-		LOG.debug("create... !");
-	}
-	
-//	@Test
-	public void update() {
-		
-		LOG.debug("update... !");
-	}
-	
 	@Test
 	public void find() {
 		
@@ -59,9 +46,12 @@ private static final Logger LOG = LoggerFactory.getLogger(OuManagerTest.class);
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("user")
 				.and("cn").is(findUser);
-		LOG.debug("`e`query = {}", query.toString());
 		
-		LdapUser find = manager.connect(provider).find(query);
-		LOG.debug("`e`found = {}", find);
+		try {
+			LdapUser find = manager.connect(provider).find(query);
+			LOG.debug("`e`found = {}", find);
+		} catch (LdapManagerException e) {
+			e.printStackTrace();
+		}
 	}
 }
