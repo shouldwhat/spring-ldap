@@ -68,6 +68,6 @@ public class PolicyManagerTest {
 	}
 	
 	private void delete(LdapPolicy policy) {
-		manager.connect(provider).delete(policy.getDn());
+		manager.connect(provider).delete(policy);
 	}
 }

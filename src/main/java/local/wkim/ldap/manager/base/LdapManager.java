@@ -4,8 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import javax.naming.Name;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,13 +41,6 @@ public abstract class LdapManager<T>{
 
 		if(entity != null) {
 			ldapTemplate.delete(entity);
-		}
-	}
-	
-	public void delete(Name dn) {
-		
-		if(dn != null) {
-			ldapTemplate.unbind(dn);
 		}
 	}
 	
