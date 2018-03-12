@@ -31,27 +31,43 @@ public class PolicyManagerTest {
 	
 	private LdapManager<LdapPolicy> manager = null;
 	
+	private LdapConnectionProvider provider = null;
+	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setup() {
+		
 		manager = (LdapManager<LdapPolicy>) ldapManagerFactory.createLdapManager("policy");
+		provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
 	}
 	
 	@Test
-	public void find() {
+	public void test() {
+	
+		String policyName = "user-policy1";
 		
-		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
+		LdapPolicy policy = this.find(policyName);
+		this.delete(policy);
+	}
+	
+	public LdapPolicy find(String policyName) {
 		
-		String findPolicy = "08_실행명령 사용 차단";
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("groupPolicyContainer")
-				.and("displayName").is(findPolicy);
+				.and("displayName").is(policyName);
 		
+		LdapPolicy policy = null;
 		try {
-			LdapPolicy find = manager.connect(provider).find(query);
-			LOG.debug("`e`found = {}", find);
+			policy = manager.connect(provider).find(query);
+			LOG.debug("`e`found = {}", policy);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}
+		
+		return policy;
+	}
+	
+	private void delete(LdapPolicy policy) {
+		manager.connect(provider).delete(policy.getDn());
 	}
 }

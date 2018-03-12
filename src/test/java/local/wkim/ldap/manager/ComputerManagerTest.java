@@ -31,27 +31,43 @@ public class ComputerManagerTest {
 	
 	private LdapManager<LdapComputer> manager = null;
 	
+	private LdapConnectionProvider provider = null;
+	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setup() {
+		
 		manager = (LdapManager<LdapComputer>) ldapManagerFactory.createLdapManager("computer");
+		provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase"); 
 	}
 	
 	@Test
-	public void find() {
+	public void test() {
+	
+		String computerName = "WON1";
 		
-		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
+		LdapComputer computer = this.find(computerName);
+		this.delete(computer);
+	}
+	
+	private LdapComputer find(String computerName) {
 		
-		String findComputer = "WON12";
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("computer")
-				.and("cn").is(findComputer);
+				.and("cn").is(computerName);
 		
+		LdapComputer computer = null;
 		try {
-			LdapComputer find = manager.connect(provider).find(query);
-			LOG.debug("`e`found = {}", find);
+			computer = manager.connect(provider).find(query);
+			LOG.debug("`e`found = {}", computer);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}
+		
+		return computer;
+	}
+	
+	private void delete(LdapComputer computer) {
+		manager.connect(provider).delete(computer);
 	}
 }

@@ -4,6 +4,10 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.naming.Name;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.ldap.core.LdapTemplate;
@@ -14,6 +18,8 @@ import local.wkim.ldap.exception.LdapManagerException;
 
 public abstract class LdapManager<T>{
 
+	private static final Logger LOG = LoggerFactory.getLogger(LdapManager.class);
+	
 	private LdapTemplate ldapTemplate;
 	
 	public LdapManager<T> connect(LdapConnectionProvider provider) {
@@ -35,7 +41,16 @@ public abstract class LdapManager<T>{
 	
 	public void delete(T entity) {
 
-		ldapTemplate.delete(entity);
+		if(entity != null) {
+			ldapTemplate.delete(entity);
+		}
+	}
+	
+	public void delete(Name dn) {
+		
+		if(dn != null) {
+			ldapTemplate.unbind(dn);
+		}
 	}
 	
 	public T find(LdapQuery query) throws LdapManagerException {

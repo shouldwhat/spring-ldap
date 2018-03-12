@@ -31,27 +31,45 @@ public class OuManagerTest {
 	
 	private LdapManager<LdapOu> manager = null;
 	
+	private LdapConnectionProvider provider = null;
+	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setup() {
+		
 		manager = (LdapManager<LdapOu>) ldapManagerFactory.createLdapManager("ou");
+		provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
 	}
 	
 	@Test
-	public void find() {
+	public void test() {
+	
+		String ouName = "wkkim";
+		
+		LdapOu ou = this.find(ouName);
+		this.delete(ou);
+	}
+	
+	private LdapOu find(String ouName) {
 		
 		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
 		
-		String findOu = "wkkims";
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("organizationalUnit")
-				.and("ou").is(findOu);
+				.and("ou").is(ouName);
 		
+		LdapOu ou = null;
 		try {
-			LdapOu find = manager.connect(provider).find(query);
-			LOG.debug("`e`found = {}", find);
+			ou = manager.connect(provider).find(query);
+			LOG.debug("`e`found = {}", ou);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}
+		
+		return ou;
+	}
+	
+	private void delete(LdapOu ou) {
+		manager.connect(provider).delete(ou);
 	}
 }

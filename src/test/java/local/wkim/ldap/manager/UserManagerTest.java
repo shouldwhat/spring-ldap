@@ -31,27 +31,43 @@ public class UserManagerTest {
 	
 	private LdapManager<LdapUser> manager = null;
 	
+	private LdapConnectionProvider provider = null;
+	
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setup() {
+		
 		manager = (LdapManager<LdapUser>) ldapManagerFactory.createLdapManager("user");
+		provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
 	}
 	
 	@Test
-	public void find() {
+	public void test() {
+	
+		String userName = "kim wonkyu";
 		
-		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
+		LdapUser user = this.find(userName);
+		this.delete(user);
+	}
+	
+	private LdapUser find(String userName) {
 		
-		String findUser = "kim wonkyus";
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("user")
-				.and("cn").is(findUser);
+				.and("cn").is(userName);
 		
+		LdapUser user = null;
 		try {
-			LdapUser find = manager.connect(provider).find(query);
-			LOG.debug("`e`found = {}", find);
+			user = manager.connect(provider).find(query);
+			LOG.debug("`e`found = {}", user);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}
+		
+		return user;
+	}
+	
+	private void delete(LdapUser user) {
+		manager.connect(provider).delete(user);
 	}
 }
