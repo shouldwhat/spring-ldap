@@ -1,5 +1,7 @@
 package local.wkim.ldap.manager;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ldap.query.LdapQuery;
 import org.springframework.ldap.query.LdapQueryBuilder;
+import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import local.wkim.ldap.connection.LdapConnectionProviderFactory;
@@ -44,12 +47,38 @@ public class OuManagerTest {
 	@Test
 	public void test() {
 	
-		String ouName = "wkkim";
+		String ouName = "wkkim3";
 		
-		LdapOu ou = this.find(ouName);
-		this.delete(ou);
+		LdapOu created = this.create(ouName);
+		assertNotNull(created);
+		
+		LdapOu found = this.find(ouName);
+		assertNotNull(found);
+		
+		this.delete(found);
 	}
 	
+	private LdapOu create(String ouName) {
+		
+//		LdapName dn = LdapNameBuilder.newInstance().add("OU", ouName).build();
+		
+		LdapOu newOu = new LdapOu();
+		newOu.setDn(LdapNameBuilder.newInstance().add("OU", ouName).build());
+		newOu.setGplink(null);
+		newOu.setName(ouName);
+		newOu.setOuDesc("This is OU Description");
+		
+		LdapOu created = null;
+		try {
+			created = manager.connect(provider).create(newOu);
+			LOG.debug("`e`created = {}", created);
+		} catch (LdapManagerException e) {
+			e.printStackTrace();
+		}
+
+		return created;
+	}
+
 	private LdapOu find(String ouName) {
 		
 		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
