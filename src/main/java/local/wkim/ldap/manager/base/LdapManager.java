@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.ldap.NameAlreadyBoundException;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQuery;
 
@@ -25,9 +26,14 @@ public abstract class LdapManager<T>{
 		return this;
 	}
 	
-	public T create(T entity) {
+	public T create(T entity) throws LdapManagerException {
 		
-		ldapTemplate.create(entity);
+		try {
+			ldapTemplate.create(entity);
+		} catch(NameAlreadyBoundException e) {
+			/* exist entity already */
+			throw new LdapManagerException(e.getMessage(), e);
+		}
 		return entity;
 	}
 	
