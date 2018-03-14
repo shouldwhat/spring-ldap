@@ -1,6 +1,7 @@
 package local.wkim.ldap.manager;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class OuManagerTest {
 	@Test
 	public void test() {
 	
-		String ouName = "wkkim3";
+		String ouName = "wkkim4";
 		
 		LdapOu created = this.create(ouName);
 		assertNotNull(created);
@@ -56,11 +57,11 @@ public class OuManagerTest {
 		assertNotNull(found);
 		
 		this.delete(found);
+		found = this.find(ouName);
+		assertNull(found);
 	}
 	
 	private LdapOu create(String ouName) {
-		
-//		LdapName dn = LdapNameBuilder.newInstance().add("OU", ouName).build();
 		
 		LdapOu newOu = new LdapOu();
 		newOu.setDn(LdapNameBuilder.newInstance().add("OU", ouName).build());
@@ -71,7 +72,7 @@ public class OuManagerTest {
 		LdapOu created = null;
 		try {
 			created = manager.connect(provider).create(newOu);
-			LOG.debug("`e`created = {}", created);
+			LOG.debug("`d`created = {}", created);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}
@@ -81,8 +82,6 @@ public class OuManagerTest {
 
 	private LdapOu find(String ouName) {
 		
-		LdapConnectionProvider provider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
-		
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("organizationalUnit")
 				.and("ou").is(ouName);
@@ -90,7 +89,7 @@ public class OuManagerTest {
 		LdapOu ou = null;
 		try {
 			ou = manager.connect(provider).find(query);
-			LOG.debug("`e`found = {}", ou);
+			LOG.debug("`d`found = {}", ou);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,7 @@
 package local.wkim.ldap.manager;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,28 +48,24 @@ public class PolicyManagerTest {
 	
 		String policyName = "user-policy1";
 		
-		LdapPolicy policy = this.find(policyName);
-		this.delete(policy);
+		List<LdapPolicy> policies = this.findAll(policyName);
+		LOG.debug("`e`found = {}", policies);
 	}
 	
-	public LdapPolicy find(String policyName) {
+	public List<LdapPolicy> findAll(String policyName) {
 		
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("groupPolicyContainer")
 				.and("displayName").is(policyName);
 		
-		LdapPolicy policy = null;
+		List<LdapPolicy> policies = null;
 		try {
-			policy = manager.connect(provider).find(query);
-			LOG.debug("`e`found = {}", policy);
+			policies = manager.connect(provider).findAll(query);
+			LOG.debug("`e`found = {}", policies);
 		} catch (LdapManagerException e) {
 			e.printStackTrace();
 		}
 		
-		return policy;
-	}
-	
-	private void delete(LdapPolicy policy) {
-		manager.connect(provider).delete(policy);
+		return policies;
 	}
 }

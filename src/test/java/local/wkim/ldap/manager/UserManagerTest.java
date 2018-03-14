@@ -1,5 +1,8 @@
 package local.wkim.ldap.manager;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ldap.query.LdapQuery;
 import org.springframework.ldap.query.LdapQueryBuilder;
+import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import local.wkim.ldap.connection.LdapConnectionProviderFactory;
@@ -44,17 +48,43 @@ public class UserManagerTest {
 	@Test
 	public void test() {
 	
-		String userName = "kim wonkyu";
+		String userId = "kim wonkyu";
 		
-		LdapUser user = this.find(userName);
-		this.delete(user);
+		LdapUser created = this.create(userId);
+		assertNotNull(created);
+		
+		LdapUser found = this.find(userId);
+		assertNotNull(found);
+		
+		this.delete(found);
+		found = this.find(userId);
+		assertNull(found);
 	}
 	
-	private LdapUser find(String userName) {
+	private LdapUser create(String userId) {
+		
+		LdapUser newUser = new LdapUser();
+		newUser.setDn(LdapNameBuilder.newInstance().add("CN", userId).build());
+		newUser.setUserId(userId);
+		newUser.setUserName("This is User's Name");
+		newUser.setSamAccountName(userId);
+		
+		LdapUser created = null;
+		try {
+			created = manager.connect(provider).create(newUser);
+			LOG.debug("`d`created = {}", created);
+		} catch (LdapManagerException e) {
+			e.printStackTrace();
+		}
+		
+		return created;
+	}
+
+	private LdapUser find(String userId) {
 		
 		LdapQuery query = LdapQueryBuilder.query()
 				.where("objectClass").is("user")
-				.and("cn").is(userName);
+				.and("cn").is(userId);
 		
 		LdapUser user = null;
 		try {
