@@ -1,6 +1,6 @@
 # spring-ldap
 
-* Ldap(Lightweight Directory Access Protocol) 을 다루는 API를 제어하여, MS-ActiveDirectory 플랫폼 상의 Entity를 관리하기 위한 프로젝트.
+* LDAP(Lightweight Directory Access Protocol) 을 다루는 API를 제어하여, MS-ActiveDirectory 플랫폼 상의 Entity를 관리하기 위한 프로젝트.
 
 * OOP 사상을 반영한 클래스 구조 설계.
 
@@ -25,13 +25,13 @@
 
 	(1) TODO
 	
-8. 시퀀스
+* 시퀀스
 
-* 조직(OU) 생성	
-![](/images/OU 생성.png)
+	*. 조직(OU) 생성	
+	![](/images/sequence_create.png)
 
-* 사용자(CN) 삭제
-![](/images/CN 삭제.png)
+	*. 사용자(CN) 삭제
+	![](/images/sequence_delete.png)
 
-* 컴퓨터 (COMPUTER) 조회
-![](/images/COMPUTER 조회.png)
+	*. 컴퓨터 (COMPUTER) 조회
+	![](/images/sequence_find.png)
