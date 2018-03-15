@@ -50,3 +50,29 @@
   ![](/images/sequence_find.png)
 
 -----------------------------------
+
+* **사용 예**
+```
+private LdapOu create(String ouName) {
+	
+	/*
+	 * provider type = ["propertyBase", "dbBase", "paramBase"]
+	 */
+	LdapConnectionProvider connectionProvider = ldapConnectionProviderFactory.createConnectionProvider("propertyBase");
+	
+	/*
+	 * manager type = ["ou", "user", "computer", "policy"]
+	 */
+	LdapManager<LdapOu> manager = (LdapManager<LdapOu>) ldapManagerFactory.createLdapManager("ou");
+	
+	LdapOu newOuInfo = new LdapOu();
+	newOuInfo.setDn(LdapNameBuilder.newInstance().add("OU", ouName).build());
+	newOuInfo.setGplink(null);
+	newOuInfo.setName(ouName);
+	newOuInfo.setOuDesc("This is OU Description");
+	
+	manager.connect(connectionProvider).create(newOuInfo);
+}
+```
+
+-----------------------------------
