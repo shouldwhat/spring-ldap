@@ -40,13 +40,13 @@
 
 * **시퀀스**
 
-  *. 조직(OU) 생성	
+  *. **조직(OU) 생성**	
   ![](/images/sequence_create.png)
 
-  *. 사용자(CN) 삭제
+  *. **사용자(CN) 삭제**
   ![](/images/sequence_delete.png)
 
-  *. 컴퓨터 (COMPUTER) 조회
+  *. **컴퓨터 (COMPUTER) 조회**
   ![](/images/sequence_find.png)
 
 -----------------------------------
