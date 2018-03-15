@@ -9,6 +9,7 @@
 	*. 테스트 가능한 junit 클래스 구현.
 
 	*. 제어 가능한 Entity : 사용자(CN), 조직(OU), 컴퓨터 (COMPUTER), 정책(POLICY)
+---
 
 * 개발 환경
 
@@ -17,17 +18,19 @@
 	*. spring-boot : 2.0.0.RELEASE
 	
 	*. MS-ActiveDirectory : Windows Server 2012 R2
-	
+---	
 	
 * 클래스 구조
 ![](/images/class.png)
+---
 
 * 클래스 설명
-
+	
 	(1) TODO
 	
 	(2) 
-	
+---
+
 * 시퀀스
 
 	*. 조직(OU) 생성	
