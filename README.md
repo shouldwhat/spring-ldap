@@ -1,15 +1,15 @@
 # spring-ldap
 
-1. Ldap(Lightweight Directory Access Protocol) 을 다루는 API를 제어하여, MS-ActiveDirectory 플랫폼 상의 Entity를 관리하기 위한 프로젝트.
+* Ldap(Lightweight Directory Access Protocol) 을 다루는 API를 제어하여, MS-ActiveDirectory 플랫폼 상의 Entity를 관리하기 위한 프로젝트.
 
-2. OOP 사상을 반영한 클래스 구조 설계.
+* OOP 사상을 반영한 클래스 구조 설계.
 
-3. 테스트 가능한 junit 클래스 구현.
+* 테스트 가능한 junit 클래스 구현.
 
-4. 제어 가능한 Entity : 사용자(CN), 조직(OU), 컴퓨터 (COMPUTER), 정책(POLICY)
+* 제어 가능한 Entity : 사용자(CN), 조직(OU), 컴퓨터 (COMPUTER), 정책(POLICY)
 
 
-5. 개발 환경
+* 개발 환경
 
 	*. JDK : 1.8.0_144
 	
@@ -18,21 +18,20 @@
 	*. MS-ActiveDirectory : Windows Server 2012 R2
 	
 	
-6. 클래스 구조
+* 클래스 구조
 ![](/images/class.png)
 
-7. 클래스 설명
+* 클래스 설명
 
 	(1) TODO
 	
 8. 시퀀스
 
-	* 조직(OU) 생성
+* 조직(OU) 생성	
 ![](/images/OU 생성.png)
 
-	* 사용자(CN) 삭제
+* 사용자(CN) 삭제
 ![](/images/CN 삭제.png)
 
-	* 컴퓨터 (COMPUTER) 조회
+* 컴퓨터 (COMPUTER) 조회
 ![](/images/COMPUTER 조회.png)
-
