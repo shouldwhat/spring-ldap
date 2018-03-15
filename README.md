@@ -31,9 +31,9 @@
 
 * **주요 클래스 설명**
 ```    
-    *. LdapConnectionProvider : ldap connection object(=LdapTemplate) 생성을 수행하는 기능을 추상화한 클래스
+    *. LdapConnectionProvider : ldap connection object(=LdapTemplate) 생성 기능을 수행하는 추상화 클래스
 	
-    *. LdapManager<T> : Generic<T> 타입에 따라 entity의 CRUD를 수행하는 기능을 추상화한 클래스
+    *. LdapManager<T> : Generic<T> 타입에 따라 entity의 CRUD 기능을 수행하는 추상화 클래스
 ```
 
 -----------------------------------
