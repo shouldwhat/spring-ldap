@@ -29,11 +29,11 @@
 
 -----------------------------------
 
-* **클래스 설명**
+* **주요 클래스 설명**
 ```    
-    (1) TODO
+    *. LdapConnectionProvider : ldap connection object(=LdapTemplate) 생성을 수행하는 기능을 추상화한 클래스
 	
-    (2) 
+    *. LdapManager<T> : Generic<T> 타입에 따라 entity의 CRUD를 수행하는 기능을 추상화한 클래스
 ```
 
 -----------------------------------
@@ -51,9 +51,9 @@
 
 -----------------------------------
 
-* **사용 예**
+* **샘플 예제 (조직 생성)**
 ```
-private LdapOu create(String ouName) {
+private LdapOu createOuSample(String ouName) {
 	
 	/*
 	 * provider type = ["propertyBase", "dbBase", "paramBase"]
